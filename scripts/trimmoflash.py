@@ -48,7 +48,7 @@ def main(fastq, threads, trimmomatic, single):
     trimmomatic_outdir = fastq + '_trimmomatic'
     os.mkdir(trimmomatic_outdir)
 
-    trimmomatic_command = 'java -jar {} '.format(trimmomatic)
+    trimmomatic_command = 'trimmomatic '
 
     if single:
         trimmomatic_command += 'SE '.format(fastq)
