@@ -13,7 +13,7 @@ def main(args):
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
 
     if args.email is None:
-        email = subprocess.check_output(['git', 'config', '--global', 'user.email']).strip()
+        email = subprocess.check_output(['git', 'config', '--global', 'user.email']).decode().strip()
         if '@' not in email:
             raise RuntimeError('No email provided, and cannot find it in the git global config')
         logging.info('No email provided, so using %s (from git profile)' % email)
@@ -25,7 +25,7 @@ def main(args):
     record = Entrez.read(handle)
     logging.info('Found %d records' % len(record['IdList']))
 
-    with open(args.output + '_gilist.txt', 'wb') as gi_out:
+    with open(args.output + '_gilist.txt', 'w') as gi_out:
         for rec in record['IdList']:
             gi_out.write('%s\n' % rec)
 

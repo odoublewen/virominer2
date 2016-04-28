@@ -8,7 +8,7 @@ import os
 import gzip
 
 
-def fastq_to_tab(fastq: 'FASTQ file (if paired, first in the pair)'):
+def fastq_to_tab(fastq):
 
     if fastq[-3:] == '.gz':
         f = gzip.open(fastq, 'r')
@@ -28,13 +28,7 @@ def fastq_to_tab(fastq: 'FASTQ file (if paired, first in the pair)'):
     f.close()
 
 
-def main(fastq: 'FASTQ file (if paired, first in the pair)',
-         threads: 'Number of threads to tell Trimmomatic and FLASH to use.  If 0, these programs will '
-                  'automatically choose' = 0,
-         trimmomatic: 'Path to trimmomatic jar file' = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                                                    'Trimmomatic-0.33', 'trimmomatic-0.33.jar'),
-         single: 'Single read' = False
-         ):
+def main(fastq, threads, trimmomatic, single):
 
     log = logging.getLogger()
     logging_filehandler = logging.FileHandler(filename=fastq + '_trimmoflash.log')
@@ -100,5 +94,24 @@ def main(fastq: 'FASTQ file (if paired, first in the pair)',
 
 
 def make_arg_parser():
+    parser = argparse.ArgumentParser(
+        description="Trimmomatic plus FLASH.")
 
+    parser.add_argument('--fastq', required=True,
+                        help='FASTQ file (if paired, first in the pair)')
 
+    parser.add_argument('--threads', default=0,
+                        help='Number of threads to tell Trimmomatic and FLASH to use. '
+                             'If 0, these programs will automatically choose')
+
+    parser.add_argument('--trimmomatic', default=os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Trimmomatic-0.33', 'trimmomatic-0.33.jar'),
+                        help='Path to trimmomatic jar file')
+
+    parser.add_argument('--single', action='store_true',
+                        help='Single read')
+
+    return parser
+
+if __name__ == '__main__':
+    args = make_arg_parser().parse_args()
+    main(args.fastq, args.threads, args.trimmomatic, args.single)
