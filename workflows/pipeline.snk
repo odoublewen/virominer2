@@ -4,7 +4,9 @@ rule all:
 
 rule build_databases:
 
-rule filter_reads:
+rule trimmomatic:
+
+rule flash:
 
 rule filter_out:
 
