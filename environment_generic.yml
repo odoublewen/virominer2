@@ -1,0 +1,13 @@
+name: virominer2
+dependencies:
+- biopython
+- blast
+- bowtie2
+- flash
+- numpy
+- pip
+- snakemake
+- trimmomatic
+- trinity
+- krona
+- samtools
