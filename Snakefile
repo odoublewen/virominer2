@@ -1,8 +1,15 @@
 
+filterout = '{FILTEROUT}'
+filterin = '{FILTERIN}'
+data = '{DATA}'
+threads = {THREADS}
+
 rule all:
 
-
 rule build_databases:
+
+    ##[Organism:exp]
+
 
 rule trimmomatic:
 
